@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Safe Adventure UBK SMK Sungai Besar</title>
+<title>Safe Adventure UBK SMK Sungai Besar | V20 Tablet & Telefon</title>
 <meta name="description" content="Permainan interaktif Program SAFE: Misi Hentikan Buli oleh Unit Bimbingan dan Kaunseling SMK Sungai Besar.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ms_MY">
@@ -243,6 +243,23 @@ canvas{
   .answer{font-size:12px;padding:16px 14px}
   .feedback,.card p{font-size:11px}
 }
+
+/* Paparan ranking satu skrin, sesuai juga untuk telefon melintang */
+.rankStatus{font:600 13px/1.5 system-ui;color:#d8e6ff;margin:8px 0}
+.rankCard{display:flex;flex-direction:column;gap:8px;max-height:94dvh}
+.rankCard h2{margin:0;font-size:clamp(16px,2vw,25px)}
+.rankCard .badge{margin:0;width:max-content;max-width:100%}
+.rankMe{background:#173e5b;border-left:5px solid #f6cc3e;padding:10px 12px;border-radius:6px;font-size:clamp(11px,1.4vw,16px)!important;margin:0!important}
+.rankScroll{overflow:auto;min-height:0;flex:1;border:2px solid #364763;border-radius:8px}
+.rankTable{border-collapse:collapse;width:100%;font:600 13px/1.4 system-ui}
+.rankTable th{position:sticky;top:0;background:#253c59;color:#ffde68;text-align:left;padding:10px}
+.rankTable td{border-bottom:1px solid #344663;padding:9px;color:#e5f2ff}
+.rankTable tr.mine td{background:#26644c;color:white;font-weight:800}
+.rankTable th:nth-child(3),.rankTable td:nth-child(3),.rankTable th:nth-child(4),.rankTable td:nth-child(4){text-align:right;white-space:nowrap}
+.rankCard .actionBtn{padding:12px;font-size:clamp(10px,1.2vw,13px);margin:4px 0;box-shadow:none}
+.rankCard .smallNote{font-size:10px;line-height:1.4;margin:0}
+@media(max-width:700px){.rankCard{padding:12px!important;border-width:4px!important;gap:5px}.rankTable{font-size:11px}.rankTable td,.rankTable th{padding:5px}.rankCard .actionBtn{padding:9px;font-size:10px}.rankCard .rankMe{font-size:10px!important;padding:7px}.rankCard .badge{padding:7px;font-size:9px}}
+
 </style>
 <style id="mobile-upgrade">
 /* V13: susun atur telefon, tablet, dan skrin PC */
@@ -360,6 +377,81 @@ input{font-size:16px!important}
   #quizQuestion{font-size:17px!important}
 }
 </style>
+
+<style id="v20-ipad-landscape">
+/* Tablet/iPad landskap: gunakan seluruh tinggi paparan, bukan susun atur desktop. */
+@media (pointer:coarse) and (orientation:landscape){
+ html,body{width:100%;height:100%;overflow:hidden;overscroll-behavior:none}
+ .wrapper{padding:0!important;min-height:0!important;height:100dvh!important;display:block!important}
+ .shell{width:100%!important;max-width:none!important;height:100dvh!important;padding:0!important;border-radius:0!important;box-shadow:none!important}
+ .viewportWrap{height:100%!important;padding:0!important;display:flex!important;flex-direction:column!important;border-radius:0!important;box-shadow:none!important}
+ .viewport{width:100%!important;flex:1 1 auto!important;height:auto!important;min-height:0!important;aspect-ratio:auto!important;border-radius:0!important}
+ canvas{width:100%!important;height:100%!important}
+ .bottomBar{width:100%!important;flex:0 0 82px!important;min-height:82px!important;display:flex!important;align-items:center!important;justify-content:center!important;position:relative!important;padding:7px 18px calc(7px + env(safe-area-inset-bottom))!important;margin:0!important;background:#09122ae8!important;border-radius:0!important}
+ .controls{width:100%!important;height:68px!important;display:flex!important;justify-content:space-between!important;align-items:center!important;gap:10px!important}
+ .moveGroup{display:flex!important;gap:12px!important}
+ .ctrl.circle{width:62px!important;height:62px!important;font-size:25px!important;border-width:3px!important}
+ .ctrl.jump{width:132px!important;height:62px!important;font-size:13px!important;border-width:3px!important}
+ .hintBtn{position:absolute!important;bottom:calc(17px + env(safe-area-inset-bottom))!important;left:50%!important;transform:translateX(-50%)!important;min-height:42px!important;padding:8px 12px!important;max-width:35%!important;font:700 11px/1.2 system-ui!important;z-index:8!important}
+ .missionLine,.footerTag{display:none!important}
+ .hud{top:10px!important;left:12px!important;right:12px!important;gap:7px!important}
+ .statText{font-size:clamp(9px,1.3vw,15px)!important;max-width:70%;line-height:1.5!important}
+ .soundBtn{min-height:35px!important;font-size:clamp(8px,1vw,12px)!important;padding:8px 9px!important;border-width:2px!important}
+ .fullscreenBtn{min-width:39px!important}
+ .overlay{padding:6px max(7px,env(safe-area-inset-right)) 6px max(7px,env(safe-area-inset-left))!important}
+ .card{max-width:min(980px,98vw)!important;max-height:calc(100dvh - 12px)!important;padding:12px 17px!important}
+ .quizCard{width:min(980px,98vw)!important}
+ #answersWrap{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #quizOverlay .answer{min-height:38px!important;padding:8px 10px!important}
+ .gridStats{gap:7px!important;margin:8px 0!important}
+ .gridStats div{padding:7px!important}
+}
+/* Telefon/iPad menegak: paparan dunia permainan berpusing secara VISUAL.
+   Safari iOS tidak membenarkan laman web mengubah orientasi fizikal peranti secara paksa. */
+@media (pointer:coarse) and (orientation:portrait){
+ html,body{height:100%;width:100%;overflow:hidden!important;overscroll-behavior:none}
+ .wrapper{position:fixed!important;inset:0!important;padding:0!important;min-height:0!important;height:100dvh!important;width:100vw!important;display:block!important}
+ .shell{position:fixed!important;left:100vw!important;top:0!important;transform:rotate(90deg)!important;transform-origin:top left!important;width:100dvh!important;max-width:none!important;height:100vw!important;padding:0!important;margin:0!important;border-radius:0!important;box-shadow:none!important}
+ .viewportWrap{height:100%!important;padding:0!important;display:flex!important;flex-direction:column!important;border-radius:0!important;box-shadow:none!important}
+ .viewport{flex:1 1 auto!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:auto!important;border-radius:0!important}
+ canvas{width:100%!important;height:100%!important}
+ .bottomBar{width:100%!important;flex:0 0 68px!important;min-height:68px!important;display:flex!important;align-items:center!important;justify-content:center!important;position:relative!important;padding:5px 9px!important;margin:0!important;background:#09122a!important;border-radius:0!important}
+ .controls{width:100%!important;height:56px!important;display:flex!important;justify-content:space-between!important;gap:8px!important;align-items:center!important}
+ .moveGroup{gap:9px!important}
+ .ctrl.circle{width:52px!important;height:52px!important;font-size:20px!important;border-width:2px!important}
+ .ctrl.jump{width:105px!important;height:52px!important;font-size:12px!important;border-width:2px!important}
+ .hintBtn{position:absolute!important;left:50%!important;bottom:11px!important;transform:translateX(-50%)!important;font:700 10px system-ui!important;max-width:34%!important;min-height:38px!important;padding:6px 8px!important}
+ .missionLine,.footerTag,.portraitNote{display:none!important}
+ .hud{top:7px!important;left:9px!important;right:9px!important}
+ .statText{font-size:clamp(8px,1.45vh,13px)!important;line-height:1.45!important;max-width:72%!important}
+ .soundBtn{font-size:clamp(8px,1.35vh,11px)!important;padding:7px!important;min-height:32px!important;border-width:2px!important}
+ .fullscreenBtn{min-width:35px!important}
+ /* Soalan/keputusan ikut arah permainan; skrin pendaftaran kekal tegak agar mudah menaip. */
+ #quizOverlay,#finishOverlay,#rankingOverlay,#gameOverOverlay{
+   position:fixed!important;left:100vw!important;top:0!important;right:auto!important;bottom:auto!important;
+   width:100dvh!important;height:100vw!important;max-width:none!important;max-height:none!important;
+   transform:rotate(90deg)!important;transform-origin:top left!important;
+   padding:5px 7px!important;overflow:hidden!important
+ }
+ #quizOverlay .quizCard{width:min(940px,calc(100dvh - 12px))!important;max-width:calc(100dvh - 12px)!important;max-height:calc(100vw - 10px)!important;padding:7px 10px!important;gap:4px!important}
+ #quizQuestion{font:800 clamp(12px,3vw,18px)/1.18 system-ui!important}
+ #answersWrap{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:4px 6px!important}
+ #quizOverlay .answer{font:600 clamp(10px,2.4vw,13px)/1.2 system-ui!important;min-height:34px!important;padding:5px 8px!important;margin:0!important}
+ #feedbackBox{font:500 clamp(9px,2.2vw,12px)/1.2 system-ui!important;padding:5px 8px!important}
+ #continueBtn{font:800 12px system-ui!important;min-height:32px!important;padding:6px!important}
+ #finishOverlay .card,#rankingOverlay .card,#gameOverOverlay .card{width:min(940px,calc(100dvh - 12px))!important;max-height:calc(100vw - 10px)!important;max-width:calc(100dvh - 12px)!important;padding:9px 12px!important;overflow:auto!important}
+ #finishOverlay .card h2,#rankingOverlay .card h2,#gameOverOverlay .card h2{font-size:clamp(13px,3vw,20px)!important;margin:3px 0!important}
+ #finishOverlay .card p,#rankingOverlay .card p,#gameOverOverlay .card p{font:11px/1.35 system-ui!important;margin:4px 0!important}
+ #finishOverlay .actionBtn,#rankingOverlay .actionBtn,#gameOverOverlay .actionBtn{font:700 11px system-ui!important;padding:8px!important;margin-top:5px!important;min-height:35px!important}
+ #finishOverlay .gridStats{margin:5px 0!important;gap:6px!important}
+ #finishOverlay .gridStats div{font:10px/1.3 system-ui!important;padding:5px!important}
+ #finishOverlay .resultHero,#gameOverOverlay .resultHero{font:700 16px system-ui!important;margin:5px 0!important;padding:7px!important}
+ #rankingOverlay .rankScroll{max-height:38vh!important;overflow:auto!important}
+ /* Skrin mula kekal dalam orientasi sebenar peranti supaya input teks mudah. */
+ #startOverlay{padding:8px!important}
+ #startOverlay .card{max-height:calc(100dvh - 16px)!important;max-width:calc(100vw - 16px)!important;overflow:auto!important;padding:14px!important}
+}
+</style>
 </head>
 <body>
 <div class="wrapper">
@@ -388,7 +480,7 @@ input{font-size:16px!important}
   </div>
 </div>
 
-<div class="portraitNote" id="portraitNote">📱 Untuk pengalaman terbaik, pusingkan telefon ke kedudukan <strong>melintang</strong> (landskap).</div>
+<div class="portraitNote" id="portraitNote">📱 Paparan permainan menggunakan mod landskap. Jika telefon tidak berpusing secara fizikal, skrin permainan akan dipusingkan secara automatik.</div>
 <div class="overlay" id="startOverlay">
   <div class="card">
     <div class="badge">SAFE ADVENTURE • EDISI ARCADE</div>
@@ -447,11 +539,27 @@ input{font-size:16px!important}
     </div>
     <p class="smallNote">Pesanan SAFE: hormati rakan, bantu mangsa dan berani laporkan buli kepada guru atau orang dewasa yang dipercayai.</p>
     <p class="smallNote" id="resultDetails">Tangkap layar paparan ini sebagai bukti pertandingan.</p>
+    <p id="rankingSubmissionStatus" class="rankStatus" aria-live="polite">Keputusan belum dihantar.</p>
+    <button class="actionBtn alt" id="viewRankingBtn">🏆 SEMAK KEDUDUKAN</button>
     <button class="actionBtn" id="replayBtn">MAIN LAGI ↻</button>
     <button class="actionBtn dark" id="newParticipantBtn">PESERTA BAHARU</button>
   </div>
 </div>
 
+
+<div class="overlay" id="rankingOverlay" hidden>
+  <div class="card rankCard">
+    <div class="badge">🏆 KEDUDUKAN PERTANDINGAN</div>
+    <h2>LEADERBOARD SAFE</h2>
+    <p id="myRank" class="rankMe">Memuatkan kedudukan...</p>
+    <div class="rankScroll">
+      <table class="rankTable"><thead><tr><th>NO.</th><th>PESERTA</th><th>SKOR</th><th>MASA</th></tr></thead><tbody id="rankRows"></tbody></table>
+    </div>
+    <p id="rankInfo" class="smallNote">Markah tertinggi didahulukan, kemudian masa paling pantas.</p>
+    <button class="actionBtn alt" id="refreshRankBtn">⟳ MUAT SEMULA KEDUDUKAN</button>
+    <button class="actionBtn dark" id="closeRankBtn">KEMBALI KE KEPUTUSAN</button>
+  </div>
+</div>
 
 <div class="overlay" id="gameOverOverlay" hidden>
   <div class="card" style="text-align:center">
@@ -648,6 +756,7 @@ function currentStatus(){
 }
 
 function resetGame(){
+  currentRunId=null;rankUploadPromise=null;rankUploaded=false;rankingOverlay.hidden=true;rankStatus.textContent='Keputusan belum dihantar.';
   score=0; correct=0; finished=0; coinsCollected=0; cameraX=0; lastTime=0; messageTimer=0; tempMessage=''; checkpointX=120; flagUnlocked=false; flagRising=false; flagRise=0; flagCelebration=0;
   lives=5; floatScores=[]; victoryStarted=false; flagPlayerY=0; stopBackgroundMusic(); gameStartAt=performance.now(); gameFinishAt=0; timerPenaltyMs=0; elapsedMs=0; invulnerableFrames=0; deathCount=0; stompCount=0; helpCount=0; participantName=playerNameInput.value.trim(); participantClass=playerClassInput.value.trim();
   enemies.forEach(e=>{e.x=e.startX;e.dir=e.startDir;e.alive=true;});
@@ -909,10 +1018,99 @@ function beginFlagRaise(){
   updateHud();
 }
 
+// Sambungan ranking dalam talian. Isi dua nilai ini selepas Supabase disediakan.
+// Jangan masukkan service_role key: gunakan kunci publishable/anon sahaja.
+const RANKING_CONFIG = {
+  url: 'https://aielpolhlijrysbyasvc.supabase.co',
+  anonKey: 'sb_publishable_sPoP1H-Z8MXuY-nr1LE8Jg_oC88dFxQ'
+};
+const rankIsConfigured=()=>Boolean(RANKING_CONFIG.url.startsWith('https://')&&RANKING_CONFIG.anonKey.trim());
+let currentRunId=null;
+let rankUploadPromise=null;
+let rankUploaded=false;
+const rankStatus=document.getElementById('rankingSubmissionStatus');
+const rankingOverlay=document.getElementById('rankingOverlay');
+const myRank=document.getElementById('myRank');
+const rankRows=document.getElementById('rankRows');
+const rankInfo=document.getElementById('rankInfo');
+function displayTime(ms){const seconds=Math.floor(Math.max(0,ms)/1000);return String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')}
+function rankingHeaders(){const h={apikey:RANKING_CONFIG.anonKey,'Content-Type':'application/json'};if(RANKING_CONFIG.anonKey.startsWith('eyJ'))h.Authorization='Bearer '+RANKING_CONFIG.anonKey;return h}
+function getRunId(){
+  if(currentRunId)return currentRunId;
+  if(window.crypto&&crypto.randomUUID)currentRunId=crypto.randomUUID();
+  else currentRunId='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.floor(Math.random()*16);return (c==='x'?r:(r&3|8)).toString(16)});
+  return currentRunId;
+}
+async function uploadRank(){
+  if(!rankIsConfigured()){
+    rankStatus.textContent='Ranking belum diaktifkan. Guru perlu sambungkan pangkalan data dahulu.';
+    return false;
+  }
+  if(rankUploaded)return true;
+  if(rankUploadPromise)return rankUploadPromise;
+  const payload={id:getRunId(),player_name:participantName.slice(0,50),class_name:participantClass.slice(0,30),score:Math.max(0,Math.floor(score)),time_ms:Math.max(0,Math.floor(elapsedMs)),quiz_correct:correct};
+  rankStatus.textContent='Menghantar keputusan ke papan ranking...';
+  rankUploadPromise=(async()=>{
+    try{
+      const url=RANKING_CONFIG.url.replace(/\/$/,'')+'/rest/v1/safe_scores';
+      const res=await fetch(url,{method:'POST',headers:{...rankingHeaders(),Prefer:'return=minimal,resolution=ignore-duplicates'},body:JSON.stringify(payload)});
+      if(!res.ok)throw new Error('HTTP '+res.status+' '+(await res.text()).slice(0,100));
+      rankUploaded=true;
+      rankStatus.textContent='✓ Keputusan berjaya dihantar ke papan ranking.';
+      return true;
+    }catch(err){
+      rankStatus.textContent='Tidak dapat menghantar keputusan. Tekan SEMAK KEDUDUKAN untuk cuba lagi.';
+      console.warn('SAFE ranking upload:',err);
+      return false;
+    }finally{rankUploadPromise=null}
+  })();
+  return rankUploadPromise;
+}
+async function showRanking(){
+  rankingOverlay.hidden=false;
+  rankRows.replaceChildren();
+  if(!rankIsConfigured()){
+    myRank.textContent='Ranking dalam talian belum diaktifkan.';
+    rankInfo.textContent='Paparan ranking memerlukan sambungan Supabase. Keputusan masih boleh diambil sebagai tangkap layar.';
+    return;
+  }
+  myRank.textContent='Memuatkan keputusan peserta...';
+  const saved=await uploadRank();
+  if(!saved){myRank.textContent='Keputusan belum berjaya dihantar. Semak sambungan internet dan cuba semula.';return;}
+  try{
+    const base=RANKING_CONFIG.url.replace(/\/$/,'');
+    const response=await fetch(base+'/rest/v1/safe_scores?select=id,player_name,class_name,score,time_ms&order=score.desc,time_ms.asc,id.asc&limit=1000',{headers:rankingHeaders(),cache:'no-store'});
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    const data=await response.json();
+    const ownIndex=data.findIndex(row=>row.id===currentRunId);
+    if(ownIndex>=0)myRank.textContent='KEDUDUKAN ANDA: #'+(ownIndex+1)+'  |  SKOR '+score+'  |  MASA '+displayTime(elapsedMs);
+    else myRank.textContent='Keputusan anda berjaya dihantar, tetapi di luar 1,000 keputusan teratas.';
+    const visible=data.slice(0,20);
+    const displayName=n=>{const s=String(n||'').trim();return s.length>24?s.slice(0,23)+'…':s};
+    for(let i=0;i<visible.length;i++){
+      const r=visible[i];
+      const tr=document.createElement('tr');
+      if(r.id===currentRunId)tr.className='mine';
+      const cells=[String(i+1),displayName(r.player_name)+' ('+displayName(r.class_name)+')',Number(r.score).toLocaleString('ms-MY'),displayTime(r.time_ms)];
+      for(const cell of cells){const td=document.createElement('td');td.textContent=cell;tr.appendChild(td)}
+      rankRows.appendChild(tr);
+    }
+    if(data.length===0)myRank.textContent='Belum ada keputusan.';
+    rankInfo.textContent='20 teratas daripada '+data.length+' keputusan dimuatkan (maksimum 1,000). Markah tertinggi menang; jika seri, masa lebih singkat menang. Paparan ini belum mempunyai pengesahan antitipu.';
+  }catch(err){
+    myRank.textContent='Ranking gagal dimuatkan. Semak internet atau tetapan pangkalan data.';
+    rankInfo.textContent=String(err.message);
+  }
+}
+document.getElementById('viewRankingBtn').addEventListener('click',showRanking);
+document.getElementById('refreshRankBtn').addEventListener('click',showRanking);
+document.getElementById('closeRankBtn').addEventListener('click',()=>{rankingOverlay.hidden=true});
+
 function finishGame(){
   playing = false;
   stopBackgroundMusic();
   finishOverlay.hidden = false;
+  uploadRank();
   finalMessage.textContent = 'MISI SAFE SELESAI! Ambil tangkap layar markah dan masa ini untuk pertandingan.';
   resultName.textContent=participantName;
   resultClass.textContent=`KELAS: ${participantClass}`;
