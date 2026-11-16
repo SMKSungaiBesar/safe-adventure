@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SAFE Adventure V13 | Mesra Telefon</title>
+<title>Safe Adventure UBK SMK Sungai Besar</title>
+<meta name="description" content="Permainan interaktif Program SAFE: Misi Hentikan Buli oleh Unit Bimbingan dan Kaunseling SMK Sungai Besar.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ms_MY">
+<meta property="og:title" content="Safe Adventure UBK SMK Sungai Besar">
+<meta property="og:description" content="Jom bermain dan belajar hentikan buli! Permainan interaktif SAFE oleh Unit Bimbingan dan Kaunseling SMK Sungai Besar.">
+<meta property="og:url" content="https://smksungaibesar.github.io/safe-adventure/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Safe Adventure UBK SMK Sungai Besar">
+<meta name="twitter:description" content="Permainan interaktif SAFE: Misi Hentikan Buli | UBK SMK Sungai Besar.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 :root{
@@ -320,6 +329,37 @@ input{font-size:16px!important}
   .gridStats{grid-template-columns:1fr}
 }
 </style>
+<style id="quiz-one-screen">
+
+/* V15 - kuiz muat dalam satu paparan telefon landskap. */
+#quizOverlay{padding:6px 8px;overflow:hidden;align-items:center}
+#quizOverlay .quizCard{display:flex;flex-direction:column;gap:6px;max-height:calc(100dvh - 12px);width:min(900px,calc(100vw - 16px));overflow:hidden;padding:12px 16px;border-width:4px;border-radius:16px}
+#quizOverlay .badge{align-self:flex-start;flex-shrink:0;margin:0;font:700 11px/1.2 system-ui;padding:5px 10px;border-radius:6px}
+#quizQuestion{flex:0 0 auto;margin:0!important;font:800 clamp(14px,2.7vh,21px)/1.3 system-ui!important;letter-spacing:0}
+#answersWrap{display:grid;grid-template-columns:1fr;gap:6px;min-height:0;align-content:start}
+#quizOverlay .answer{margin:0!important;padding:8px 12px;min-height:0;font:600 clamp(11px,2.3vh,15px)/1.28 system-ui!important;border-width:2px;border-radius:9px;box-shadow:none}
+#feedbackBox{flex:0 0 auto;margin:1px 0 0!important;padding:7px 10px;min-height:0;font:500 clamp(10px,2.1vh,13px)/1.32 system-ui!important;border-left-width:5px;border-radius:8px}
+#continueBtn{flex:0 0 auto;margin:0!important;padding:10px!important;min-height:38px;font:800 clamp(12px,2.3vh,16px)/1.2 system-ui!important;border-radius:9px;box-shadow:0 3px 0 #0d7b00}
+@media (orientation:landscape) and (min-width:650px){
+  #answersWrap{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 9px}
+  #quizOverlay .quizCard{width:min(990px,calc(100vw - 22px));gap:7px}
+  #quizOverlay .answer{padding:10px 12px;min-height:48px}
+}
+@media (orientation:landscape) and (max-height:470px){
+  #quizOverlay .quizCard{gap:4px;padding:7px 12px;max-height:calc(100dvh - 8px)}
+  #quizQuestion{font-size:clamp(12px,3.4vh,17px)!important;line-height:1.17!important}
+  #quizOverlay .badge{font-size:9px;padding:3px 8px}
+  #answersWrap{gap:4px 7px}
+  #quizOverlay .answer{padding:6px 9px;min-height:36px;font-size:clamp(10px,2.7vh,13px)!important;line-height:1.19!important}
+  #feedbackBox{padding:5px 8px;font-size:clamp(9px,2.6vh,12px)!important;line-height:1.2!important}
+  #continueBtn{padding:7px!important;min-height:33px;font-size:12px!important}
+}
+@media (orientation:portrait){
+  #quizOverlay .quizCard{gap:8px}
+  #quizOverlay .answer{padding:11px 12px;font-size:13px!important;min-height:44px}
+  #quizQuestion{font-size:17px!important}
+}
+</style>
 </head>
 <body>
 <div class="wrapper">
@@ -379,7 +419,7 @@ input{font-size:16px!important}
 </div>
 
 <div class="overlay" id="quizOverlay" hidden>
-  <div class="card">
+  <div class="card quizCard" id="quizCard">
     <div class="badge" id="quizBadge">INFO SAFE</div>
     <h2 id="quizQuestion">Soalan</h2>
     <div id="answersWrap"></div>
@@ -780,6 +820,21 @@ soundBtn.addEventListener('click',()=>{
   }
 });
 
+
+function fitQuizToScreen(){
+  if(quizOverlay.hidden) return;
+  const card = document.getElementById('quizCard');
+  card.style.zoom = '1';
+  const available = Math.max(160, window.innerHeight - 16);
+  const needed = card.scrollHeight;
+  if(needed > available){
+    // Kecilkan keseluruhan kuiz, bukannya sembunyikan butang sambung.
+    const scale = Math.max(.62, Math.min(1, (available-4)/needed));
+    card.style.zoom = scale.toFixed(3);
+  }
+}
+window.addEventListener('resize',()=>requestAnimationFrame(fitQuizToScreen));
+
 function openQuiz(index){
   if(activeQuiz!==null || boxes[index].used) return;
   activeQuiz = index;
@@ -797,6 +852,7 @@ function openQuiz(index){
     answersWrap.appendChild(btn);
   });
   quizOverlay.hidden = false;
+  requestAnimationFrame(fitQuizToScreen);
   playTone('hit');
 }
 
@@ -820,6 +876,7 @@ function answerQuestion(choice){
     : `❌ Belum tepat.<br><strong>Jawapan betul:</strong> ${String.fromCharCode(65+q[2])}. ${q[1][q[2]]}<br>${q[3]}`;
 
   continueBtn.classList.remove('hidden');
+  requestAnimationFrame(fitQuizToScreen);
   if(finished===qs.length){ flagUnlocked = true; setMessage('Bagus! Semua soalan selesai. Sentuh tiang bendera untuk tamat.', 260); }
   else { setMessage(`Bagus! ${finished}/15 kotak soalan sudah dibuka.`, 160); }
   updateHud();
@@ -1263,26 +1320,66 @@ function drawPlayer(){
   ctx.ellipse(p.x+p.w/2, groundY+8, 28, 7, 0, 0, Math.PI*2);
   ctx.fill();
 
-  ctx.fillStyle = '#4f921b';
-  ctx.fillRect(p.x+8,p.y+48,10,16);
-  ctx.fillRect(p.x+26,p.y+48,10,16);
-  ctx.fillStyle = '#224f0f';
-  ctx.fillRect(p.x+8,p.y+62,10,3);
-  ctx.fillRect(p.x+26,p.y+62,10,3);
+  // kaki dan kasut
+  ctx.fillStyle = '#20232b';
+  ctx.fillRect(p.x+10,p.y+47,9,17);
+  ctx.fillRect(p.x+25,p.y+47,9,17);
+  ctx.fillStyle = '#0f1115';
+  ctx.fillRect(p.x+8,p.y+61,12,4);
+  ctx.fillRect(p.x+24,p.y+61,12,4);
 
-  ctx.fillStyle = '#f8f8f8';
-  ctx.fillRect(p.x+6,p.y+18,32,32);
-  ctx.fillStyle = '#1e49d8';
-  ctx.fillRect(p.x+19,p.y+20,7,27);
-  ctx.fillStyle = '#f5d3b0';
-  ctx.fillRect(p.x+10,p.y+6,24,20);
-  ctx.fillStyle = '#0e2248';
-  ctx.fillRect(p.x+8,p.y+2,26,10);
-  ctx.fillStyle = '#0c0c0c';
-  ctx.fillRect(p.x + (p.face>0 ? 26 : 14), p.y+14, 3, 3);
-  ctx.fillStyle = '#f5d3b0';
-  ctx.fillRect(p.x+2,p.y+22,5,14);
-  ctx.fillRect(p.x+37,p.y+22,5,14);
+  // seluar trek hitam
+  ctx.fillStyle = '#2b2d35';
+  ctx.fillRect(p.x+8,p.y+37,28,12);
+  ctx.fillRect(p.x+9,p.y+44,11,10);
+  ctx.fillRect(p.x+24,p.y+44,11,10);
+
+  // baju ungu utama
+  ctx.fillStyle = '#9d35d6';
+  ctx.fillRect(p.x+6,p.y+18,32,21);
+  
+  // corak putih sisi kiri baju
+  ctx.fillStyle = '#f4f4f7';
+  ctx.fillRect(p.x+9,p.y+20,6,18);
+  ctx.fillRect(p.x+14,p.y+18,5,5);
+  ctx.fillRect(p.x+15,p.y+23,4,5);
+  ctx.fillRect(p.x+16,p.y+28,4,10);
+
+  // kolar hitam
+  ctx.fillStyle = '#262833';
+  ctx.fillRect(p.x+12,p.y+16,20,5);
+  ctx.fillRect(p.x+17,p.y+20,10,2);
+
+  // trim kuning lengan
+  ctx.fillStyle = '#ffd33f';
+  ctx.fillRect(p.x+4,p.y+32,4,3);
+  ctx.fillRect(p.x+36,p.y+32,4,3);
+
+  // lengan / tangan
+  ctx.fillStyle = '#efc39a';
+  ctx.fillRect(p.x+2,p.y+23,5,13);
+  ctx.fillRect(p.x+37,p.y+23,5,13);
+  ctx.fillRect(p.x+1,p.y+34,6,2);
+  ctx.fillRect(p.x+37,p.y+34,6,2);
+
+  // logo kecil sekolah pada dada kiri
+  ctx.fillStyle = '#ffe96e';
+  ctx.fillRect(p.x+10,p.y+23,5,6);
+  ctx.fillStyle = '#3569d6';
+  ctx.fillRect(p.x+10,p.y+23,5,3);
+  ctx.fillStyle = '#d83434';
+  ctx.fillRect(p.x+12,p.y+26,3,3);
+
+  // muka dan rambut
+  ctx.fillStyle = '#f3c8a6';
+  ctx.fillRect(p.x+10,p.y+6,24,18);
+  ctx.fillStyle = '#151928';
+  ctx.fillRect(p.x+9,p.y+2,26,8);
+  ctx.fillRect(p.x+12,p.y+9,20,3);
+  ctx.fillStyle = '#111';
+  ctx.fillRect(p.x + (p.face>0 ? 25 : 15), p.y+14, 3, 3);
+  ctx.fillStyle = '#d4977d';
+  ctx.fillRect(p.x + (p.face>0 ? 23 : 17), p.y+18, 4, 2);
 }
 
 function draw(){
